@@ -54,7 +54,7 @@ module ActiveAdmin
           )
 
           query = params.slice(:q, :scope)
-          #query = query.permit!.to_h
+          query = query.to_h
           routes.send route_name, *route_collection_params(params), additional_params.merge(query)
         end        
         
