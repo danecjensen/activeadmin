@@ -48,7 +48,7 @@ module ActiveAdmin
 
         def batch_action_path(params, additional_params = {})
           route_name = route_name(
-            resource.resources_configuration[:self][:route_collection_name],
+            resource.controller.resources_configuration[:self][:route_collection_name],
             action: :batch_action,
             suffix: (resource.route_uncountable? ? "index_path" : "path")
           )
