@@ -8,6 +8,10 @@ module ActiveAdmin
         RouteBuilder.new(self).collection_path(params)
       end
       
+      def route_batch_action_path(params = {})
+        RouteBuilder.new(self).batch_action_path(params)
+      end
+      
       # @param resource [ActiveRecord::Base] the instance we want the path of
       # @return [String] the path to this resource collection page
       # @example "/admin/posts/1"
