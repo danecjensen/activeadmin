@@ -48,14 +48,14 @@ module ActiveAdmin
 
         def batch_action_path(params, additional_params = {})
           route_name = route_name(
-            resource.resources_configuration[:self][:route_collection_name],
+            resource.controller.resources_configuration[:self][:route_collection_name],
             action: :batch_action,
-            suffix: (resource.route_uncountable? ? "index_path" : "path")
+            (resource.route_uncountable? ? "index_path" : "path")
           )
 
           query = params.slice(:q, :scope)
           query = query.permit!.to_h
-          routes.public_send route_name, *route_collection_params(params), additional_params.merge(query)
+          routes.send route_name, *route_collection_params(params), additional_params.merge(query)
         end        
         
         # @return [String] the path to this resource collection page
