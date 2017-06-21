@@ -4,7 +4,7 @@ module ActiveAdmin
       # @params params [Hash] of params: {study_id: 3}
       # @return [String] the path to this resource collection page
       # @example "/admin/posts"
-      def route_collection_path(params = {})
+      def route_collection_path(params = {}, additional_params = {})
         RouteBuilder.new(self).collection_path(params)
       end
       
@@ -37,13 +37,13 @@ module ActiveAdmin
           @resource = resource
         end
 
-        def collection_path(params)
+        def collection_path(params, additional_params = {})
           route_name = route_name(
-            resource.controller.resources_configuration[:self][:route_collection_name],
-            suffix: (resource.route_uncountable? ? 'index_path' : 'path')
+            resource.resources_configuration[:self][:route_collection_name],
+            suffix: (resource.route_uncountable? ? "index_path" : "path")
           )
 
-          routes.send(route_name, *route_collection_params(params))
+          routes.public_send route_name, *route_collection_params(params), additional_params
         end
 
         def batch_action_path(params, additional_params = {})
