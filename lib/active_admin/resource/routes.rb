@@ -8,7 +8,7 @@ module ActiveAdmin
         RouteBuilder.new(self).collection_path(params)
       end
       
-      def route_batch_action_path(params = {})
+      def route_batch_action_path(params = {}, additional_params = {})
         RouteBuilder.new(self).batch_action_path(params)
       end
       
