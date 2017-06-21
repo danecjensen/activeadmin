@@ -40,7 +40,7 @@ module ActiveAdmin
         def collection_path(params)
           route_name = route_name(
             resource.controller.resources_configuration[:self][:route_collection_name],
-            (resource.route_uncountable? ? 'index_path' : 'path')
+            suffix: (resource.route_uncountable? ? 'index_path' : 'path')
           )
 
           routes.send(route_name, *route_collection_params(params))
