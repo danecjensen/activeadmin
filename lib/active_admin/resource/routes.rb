@@ -48,9 +48,9 @@ module ActiveAdmin
 
         def batch_action_path(params, additional_params = {})
           route_name = route_name(
-            resource.controller.resources_configuration[:self][:route_collection_name],
+            resource.resources_configuration[:self][:route_collection_name],
             action: :batch_action,
-            (resource.route_uncountable? ? "index_path" : "path")
+            suffix: (resource.route_uncountable? ? "index_path" : "path")
           )
 
           query = params.slice(:q, :scope)
@@ -71,9 +71,11 @@ module ActiveAdmin
 
         attr_reader :resource
 
-        def route_name(resource_path_name, suffix = 'path')
+        def route_name(resource_path_name, options = {})
+          suffix = options[:suffix] || "path"
           route = []
 
+          route << options[:action]           # "batch_action", "edit" or "new"
           route << resource.route_prefix      # "admin"
           route << belongs_to_name if nested? # "category"
           route << resource_path_name         # "posts" or "post"
@@ -81,7 +83,6 @@ module ActiveAdmin
 
           route.compact.join('_').to_sym      # :admin_category_posts_path
         end
-
 
         # @return params to pass to instance path
         def route_instance_params(instance)
